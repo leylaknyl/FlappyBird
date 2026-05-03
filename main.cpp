@@ -22,7 +22,7 @@ int main() {
            
             if(etkilesim.type == sf::Event::KeyPressed){//kullanıcı klavyeden tuşa bastı mı?
                 if(etkilesim.key.code == sf::Keyboard::Space){//basılan tuş Space mi degil mi?
-                    bird_speed=-6.0f;//yukarı yönlü bir zıplama için negatif bir hız verilir
+                    bird_speed=-8.0f;//yukarı yönlü bir zıplama için negatif bir hız verilir
                 }
             }
         }
