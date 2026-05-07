@@ -17,10 +17,15 @@ private://sadece pipe sınıfına özel değişkenler
 
     float ust_yukseklik;// üst engelin rastgele yüksekliği
 
+    float engel_x;// boruların x konumu
+    
+    float engel_speed; // boruların hareket hızı
+
+    float bosluk;//engeller arasındaki geçiş boşluğu
+
     sf::RectangleShape ust_engel;// üst ve alt engel nesneleri
 
     sf::RectangleShape alt_engel;
 
-    float engel_x;// boruların x konumu
-    float engel_speed; // boruların hareket hızı
+
 };
