@@ -12,6 +12,8 @@ public:// main de kullabilsin diye
 
     void draw(sf::RenderWindow& pencere);//boruları ekrana çizer
 
+    bool check_collision(sf::CircleShape& bird);//kuşun üst veya alt engele çarpıp çarpmadığını kontrol eder
+
 private://sadece pipe sınıfına özel değişkenler
 
 

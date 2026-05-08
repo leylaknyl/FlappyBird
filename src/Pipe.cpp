@@ -66,3 +66,16 @@ void Pipe::draw(sf::RenderWindow& pencere) {
     pencere.draw(alt_engel);
 }
 
+// kuş ile engeller arasında çarpışma olup olmadığını kontrol eder
+bool Pipe::check_collision(sf::CircleShape& bird) {
+
+    // kuş üst engele veya alt engele çarptıysa true döndür
+    if (
+        bird.getGlobalBounds().intersects(ust_engel.getGlobalBounds()) ||
+        bird.getGlobalBounds().intersects(alt_engel.getGlobalBounds())
+    ) {
+        return true;
+    }
+
+    return false;// çarpışma yoksa false döndür
+}

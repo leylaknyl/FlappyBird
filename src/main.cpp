@@ -8,7 +8,7 @@ int main() {
 
     ana_pencere.setFramerateLimit(60);//saniyede en fazla 60 kez çalıştırır
 
-    sf::CircleShape bird_shape(50.f);//karakter tanımlaması yaptık burda 50 piksel yarıçaplı bir daire
+    sf::CircleShape bird_shape(25.f);//karakter tanımlaması yaptık burda 25 piksel yarıçaplı bir daire
 
     bird_shape.setFillColor(sf::Color::Yellow);//kuşun iç rengi 
 
@@ -29,7 +29,7 @@ int main() {
            
             if(etkilesim.type == sf::Event::KeyPressed){//kullanıcı klavyeden tuşa bastı mı?
                 if(etkilesim.key.code == sf::Keyboard::Space){//basılan tuş Space mi degil mi?
-                    bird_speed=-8.0f;//yukarı yönlü bir zıplama için negatif bir hız verilir
+                    bird_speed=-6.0f;//yukarı yönlü bir zıplama için negatif bir hız verilir
                 }
             }
         }
@@ -41,6 +41,10 @@ int main() {
 
         pipe.update();//engeller güncelleniyor,fonksiyonun çağrılması
 
+        if (pipe.check_collision(bird_shape)) {
+        ana_pencere.close();// kuş engellere çarptıysa pencere kapatılır
+        }
+
         ana_pencere.clear();//her karede ekran temizlenir
         
         pipe.draw(ana_pencere); // engellerin ekrana çizilmesi
@@ -50,4 +54,4 @@ int main() {
         ana_pencere.display();//ekrana yansıtma 
     }
     return 0;
-}
+} 
