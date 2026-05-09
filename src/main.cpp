@@ -45,6 +45,16 @@ int main() {
         ana_pencere.close();// kuş engellere çarptıysa pencere kapatılır
         }
 
+        //kuş ekranın üstüne çıkarsa veya yere düşerse oyun kapansın
+        if(
+            bird_shape.getPosition().y<0 // kuş ekran üstüne çıkmışsa
+            || bird_shape.getPosition().y +
+            bird_shape.getRadius()*2>400
+        )
+        {
+            ana_pencere.close();
+        }
+
         ana_pencere.clear();//her karede ekran temizlenir
         
         pipe.draw(ana_pencere); // engellerin ekrana çizilmesi
