@@ -79,3 +79,9 @@ bool Pipe::check_collision(sf::CircleShape& bird) {
 
     return false;// çarpışma yoksa false döndür
 }
+
+
+//pipe içindeki değeri getir
+float Pipe::get_x(){
+    return engel_x;
+}

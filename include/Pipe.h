@@ -14,6 +14,8 @@ public:// main de kullabilsin diye
 
     bool check_collision(sf::CircleShape& bird);//kuşun üst veya alt engele çarpıp çarpmadığını kontrol eder
 
+    float get_x();//engelin mevcut x konumunu döndürür
+
 private://sadece pipe sınıfına özel değişkenler
 
 
