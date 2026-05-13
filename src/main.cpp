@@ -20,6 +20,7 @@ int main() {
  
 
     int skor=0;//oyuncunun mevcut puanını tutar
+    int en_yuksek_skor = 0; // oyun boyunca ulaşılan en yüksek skor tutulur
     bool skor_alindi=false;//aynı engelden sadece bir kez puan alınmasını kontrol eder
 
     bool oyun_basladi=false;//oyun başlamadan önce başlangıç ekranını göstermek için
@@ -34,11 +35,20 @@ int main() {
     font.loadFromFile("assets/fonts/ARIALI.TTF");
 
     sf::Text skor_yazi;// skorun ekranda gösterileceği yazı nesnesi
+    sf::Text best_yazi; // en yüksek skorun gösterileceği yazı nesnesi
 
     skor_yazi.setFont(font);//skor yazısında kullanılacak font ayarlandı
     skor_yazi.setCharacterSize(30);//skor yazısının boyutu
     skor_yazi.setFillColor(sf::Color::White);//skorun rengi
     skor_yazi.setPosition(20,20);//skor yazısının ekrandaki konumu ayarlandı
+
+    best_yazi.setFont(font); // best score yazısında kullanılacak font ayarlanır
+
+    best_yazi.setCharacterSize(25); // yazı boyutu ayarlanır
+
+    best_yazi.setFillColor(sf::Color::White); // yazı rengi beyaz yapılır
+
+    best_yazi.setPosition(20,60); // yazının ekrandaki konumu ayarlanır
 
     sf::Text baslangic_yazi; // oyun başlamadan önce ekranda gösterilecek yazı
 
@@ -56,6 +66,7 @@ int main() {
     gameover_yazi.setStyle(sf::Text::Bold); // yazı kalın yapılır
     gameover_yazi.setFillColor(sf::Color::White); // yazı rengi beyaz yapılır
     gameover_yazi.setString("GAME OVER\nPRESS R"); // oyun bitince gösterilecek metin
+    
     gameover_yazi.setPosition(150, 140); // yazının ekrandaki konumu ayarlanır
 
 
@@ -133,8 +144,16 @@ int main() {
         }
     }
 
+        // mevcut skor en yüksek skordan büyükse yeni en yüksek skor kaydedilir
+        if (skor > en_yuksek_skor) {
+            en_yuksek_skor = skor;
+        }   
+        
         // Skor değeri ekranda gösterilecek yazıya çevrilir
         skor_yazi.setString("Skor: " + std::to_string(skor));
+
+        // en yüksek skor değeri yazıya çevrilerek ekranda gösterilir
+        best_yazi.setString("Best Score: " + std::to_string(en_yuksek_skor));
 
         ana_pencere.clear();//her karede ekran temizlenir
 
@@ -144,6 +163,8 @@ int main() {
 
         ana_pencere.draw(skor_yazi);//skor yazısı ekrana çizilir
     
+        ana_pencere.draw(best_yazi); // en yüksek skor yazısı ekrana çizilir
+
         //oyun başlamadıysa başlangıç yazısı çizilir.
         if(!oyun_basladi){
             ana_pencere.draw(baslangic_yazi);
