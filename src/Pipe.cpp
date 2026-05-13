@@ -67,7 +67,7 @@ void Pipe::draw(sf::RenderWindow& pencere) {
 }
 
 // kuş ile engeller arasında çarpışma olup olmadığını kontrol eder
-bool Pipe::check_collision(sf::CircleShape& bird) {
+bool Pipe::check_collision(sf::Sprite& bird) {
 
     // kuş üst engele veya alt engele çarptıysa true döndür
     if (

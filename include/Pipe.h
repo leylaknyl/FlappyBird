@@ -12,8 +12,8 @@ public:// main de kullabilsin diye
 
     void draw(sf::RenderWindow& pencere);//boruları ekrana çizer
 
-    bool check_collision(sf::CircleShape& bird);//kuşun üst veya alt engele çarpıp çarpmadığını kontrol eder
-
+    bool check_collision(sf::Sprite& bird);//kuş sprite'ı ile engeller arasındaki çarpışma kontrol ediliyor
+    
     float get_x();//engelin mevcut x konumunu döndürür
 
     void reset();// engelleri başlangıç konumuna geri alır

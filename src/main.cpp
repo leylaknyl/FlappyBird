@@ -11,14 +11,26 @@ int main() {
 
     sf::CircleShape bird_shape(25.f);//karakter tanımlaması yaptık burda 25 piksel yarıçaplı bir daire
 
+    sf::Texture bird_texture; // kuş görselini belleğe yüklemek için texture nesnesi
+
+    bird_texture.loadFromFile("assets/images/bird.png"); // bird.png dosyası projeden yüklenir
+
+    sf::Sprite bird_sprite; // kuş görselini ekranda gösterecek sprite nesnesi
+
+    bird_sprite.setTexture(bird_texture); // yüklenen texture sprite'a bağlanır
+
+    bird_sprite.setScale(0.08f, 0.08f); // kuş görselinin boyutu küçültülür
+
+    bird_sprite.setPosition(250,150); // kuşun başlangıç konumu ayarlanır
+
     bird_shape.setFillColor(sf::Color::Yellow);//kuşun iç rengi 
 
     bird_shape.setPosition(250, 150);//kuşun başlangıç konumu belirleniyor(x,y)koordinatları
 
     float bird_speed=0.0f;// kuşun dikey hızı
+
     float gravity=0.50f;// her döngüde hıza eklenecek olan yerçekimi
  
-
     int skor=0;//oyuncunun mevcut puanını tutar
     int en_yuksek_skor = 0; // oyun boyunca ulaşılan en yüksek skor tutulur
     bool skor_alindi=false;//aynı engelden sadece bir kez puan alınmasını kontrol eder
@@ -88,7 +100,7 @@ int main() {
                 // Oyun bittiyse R tuşuna basıldığında kuş başlangıç durumuna döner
                 if(etkilesim.key.code == sf::Keyboard::R && oyun_bitti == true){
 
-                bird_shape.setPosition(250,150); // kuş başlangıç konumuna alınır
+                bird_sprite.setPosition(250,150); // kuş başlangıç konumuna alınır
 
                 bird_speed = 0.0f; // kuşun dikey hızı sıfırlanır
 
@@ -110,14 +122,14 @@ int main() {
 
             bird_speed+=gravity;// yerçekimi kuşun hızına eklenir ve kuş her karede daha hızlı düşer
         
-            bird_shape.move(0,bird_speed);//yatayda hareket yok ama dikeyde hareket eder (bird_speed kadar).y+:aşağı,y-:yukarı hareket
+            bird_sprite.move(0,bird_speed);//yatayda hareket yok ama dikeyde hareket eder (bird_speed kadar).y+:aşağı,y-:yukarı hareket
 
             pipe.update();//engeller güncelleniyor,fonksiyonun çağrılması
 
         
 
         //engel kuşun arkasında kaldıysa ve bu engelden daha önce puan alınmadıysa skor arttırılır
-        if (pipe.get_x() + 70 < bird_shape.getPosition().x && skor_alindi == false) {
+        if (pipe.get_x() + 70 < bird_sprite.getPosition().x && skor_alindi == false) {
          skor++;
          skor_alindi = true;
         }
@@ -129,15 +141,15 @@ int main() {
 
 
         // kuş engellere çarptıysa oyun biter
-        if (pipe.check_collision(bird_shape)) {
+        if (pipe.check_collision(bird_sprite)) {
             oyun_bitti=true;
         }
 
         //kuş ekranın üstüne çıkarsa veya yere düşerse oyun kapansın
         if(
-            bird_shape.getPosition().y<0 // kuş ekran üstüne çıkmışsa
-            || bird_shape.getPosition().y +
-            bird_shape.getRadius()*2>400
+            bird_sprite.getPosition().y<0 // kuş ekran üstüne çıkmışsa
+            || bird_sprite.getPosition().y +
+            50 >400
         )
         {
            oyun_bitti=true;
@@ -148,7 +160,7 @@ int main() {
         if (skor > en_yuksek_skor) {
             en_yuksek_skor = skor;
         }   
-        
+
         // Skor değeri ekranda gösterilecek yazıya çevrilir
         skor_yazi.setString("Skor: " + std::to_string(skor));
 
@@ -159,7 +171,7 @@ int main() {
 
         pipe.draw(ana_pencere); // engellerin ekrana çizilmesi
        
-        ana_pencere.draw(bird_shape);//hazırlanan nesne ekrana çiziliyor,kuş engellerden sonra çiziliyor
+        ana_pencere.draw(bird_sprite); // kuş görseli ekrana çizdirilir
 
         ana_pencere.draw(skor_yazi);//skor yazısı ekrana çizilir
     
