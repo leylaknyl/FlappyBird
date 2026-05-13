@@ -16,6 +16,9 @@ public:// main de kullabilsin diye
 
     float get_x();//engelin mevcut x konumunu döndürür
 
+    void reset();// engelleri başlangıç konumuna geri alır
+ 
+    
 private://sadece pipe sınıfına özel değişkenler
 
 
@@ -27,7 +30,8 @@ private://sadece pipe sınıfına özel değişkenler
 
     float bosluk;//engeller arasındaki geçiş boşluğu
 
-    sf::RectangleShape ust_engel;// üst ve alt engel nesneleri
+    // üst ve alt engel nesneleri
+    sf::RectangleShape ust_engel;
 
     sf::RectangleShape alt_engel;
 

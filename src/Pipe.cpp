@@ -85,3 +85,20 @@ bool Pipe::check_collision(sf::CircleShape& bird) {
 float Pipe::get_x(){
     return engel_x;
 }
+
+void Pipe::reset(){
+
+    engel_x = 600.0f; // borular tekrar ekranın sağ tarafına alınır
+
+    ust_yukseklik = 80 + rand() % 120; // yeni rastgele yükseklik oluşturulur
+
+    // üst engelin boyutu yeniden ayarlanır
+    ust_engel.setSize(
+        sf::Vector2f(70.0f, ust_yukseklik)
+    );
+
+    // alt engelin boyutu yeniden hesaplanır
+    alt_engel.setSize(
+        sf::Vector2f(70.0f, 400.0f - ust_yukseklik - bosluk)
+    );
+}

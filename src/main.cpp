@@ -73,6 +73,24 @@ int main() {
                     oyun_basladi=true;//space basılınca oyun başlar
                     bird_speed=-6.0f;//yukarı yönlü bir zıplama için negatif bir hız verilir
                 }
+
+                // Oyun bittiyse R tuşuna basıldığında kuş başlangıç durumuna döner
+                if(etkilesim.key.code == sf::Keyboard::R && oyun_bitti == true){
+
+                bird_shape.setPosition(250,150); // kuş başlangıç konumuna alınır
+
+                bird_speed = 0.0f; // kuşun dikey hızı sıfırlanır
+
+                skor = 0; // skor sıfırlanır
+
+                skor_alindi = false; // yeni skor alımı için kontrol sıfırlanır
+
+                pipe.reset();//engelleri başlangıç konumuna döndürülür
+
+                oyun_bitti = false; // game over durumu kapatılır
+
+                oyun_basladi = false; // oyun tekrar başlangıç ekranına döner
+                }
             }
         }
         
