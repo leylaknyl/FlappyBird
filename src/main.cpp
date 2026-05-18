@@ -9,7 +9,7 @@ int main() {
 
     ana_pencere.setFramerateLimit(60);//saniyede en fazla 60 kez çalıştırır
 
-    sf::CircleShape bird_shape(25.f);//karakter tanımlaması yaptık burda 25 piksel yarıçaplı bir daire
+    sf::CircleShape bird_shape(20.f);//karakter tanımlaması yaptık burda 25 piksel yarıçaplı bir daire
 
     sf::Texture bird_texture; // kuş görselini belleğe yüklemek için texture nesnesi
 
@@ -26,6 +26,27 @@ int main() {
     bird_shape.setFillColor(sf::Color::Yellow);//kuşun iç rengi 
 
     bird_shape.setPosition(250, 150);//kuşun başlangıç konumu belirleniyor(x,y)koordinatları
+
+    // arka plan görselini belleğe yüklemek için texture nesnesi oluşturuldu
+    sf::Texture background_texture;
+
+    // background.png dosyası assets klasöründen yüklenir
+    background_texture.loadFromFile("assets/images/background.png");
+
+    // arka plan görselini ekranda gösterecek sprite nesnesi oluşturuldu
+    sf::Sprite background_sprite;
+
+    // yüklenen texture sprite nesnesine bağlanır
+    background_sprite.setTexture(background_texture);
+
+    //arka plan görseli pencere boyutuna göre ayarlanır
+    background_sprite.setScale(
+    600.0f / background_texture.getSize().x,
+    400.0f / background_texture.getSize().y
+);
+
+    //arka plan başlangıç konumu ayarlanır
+    background_sprite.setPosition(0,0);
 
     float bird_speed=0.0f;// kuşun dikey hızı
 
@@ -50,18 +71,20 @@ int main() {
     sf::Text best_yazi; // en yüksek skorun gösterileceği yazı nesnesi
 
     skor_yazi.setFont(font);//skor yazısında kullanılacak font ayarlandı
-    skor_yazi.setCharacterSize(30);//skor yazısının boyutu
-    skor_yazi.setFillColor(sf::Color::White);//skorun rengi
+    skor_yazi.setCharacterSize(28);//skor yazısının boyutu
+    skor_yazi.setFillColor(sf::Color::Black);//skorun rengi
     skor_yazi.setPosition(20,20);//skor yazısının ekrandaki konumu ayarlandı
+    skor_yazi.setStyle(sf::Text::Bold);
 
     best_yazi.setFont(font); // best score yazısında kullanılacak font ayarlanır
 
     best_yazi.setCharacterSize(25); // yazı boyutu ayarlanır
 
-    best_yazi.setFillColor(sf::Color::White); // yazı rengi beyaz yapılır
+    best_yazi.setFillColor(sf::Color::Black); // yazı rengi beyaz yapılır
 
     best_yazi.setPosition(20,60); // yazının ekrandaki konumu ayarlanır
 
+    best_yazi.setStyle(sf::Text::Bold);
     sf::Text baslangic_yazi; // oyun başlamadan önce ekranda gösterilecek yazı
 
     baslangic_yazi.setFont(font); // yazının kullanacağı font belirlenir
@@ -162,12 +185,14 @@ int main() {
         }   
 
         // Skor değeri ekranda gösterilecek yazıya çevrilir
-        skor_yazi.setString("Skor: " + std::to_string(skor));
+        skor_yazi.setString("Skore: " + std::to_string(skor));
 
         // en yüksek skor değeri yazıya çevrilerek ekranda gösterilir
         best_yazi.setString("Best Score: " + std::to_string(en_yuksek_skor));
 
         ana_pencere.clear();//her karede ekran temizlenir
+
+        ana_pencere.draw(background_sprite); // arka plan görseli ekrana çizdirilir
 
         pipe.draw(ana_pencere); // engellerin ekrana çizilmesi
        
