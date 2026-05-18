@@ -22,9 +22,9 @@ Pipe::Pipe() {// Pipe sınıfının constructor fonksiyonu
 );
 
     //engellerin rengi ayarlandı
-    ust_engel.setFillColor(sf::Color::Magenta);
+    ust_engel.setFillColor(sf::Color::Green);
 
-    alt_engel.setFillColor(sf::Color::Magenta);
+    alt_engel.setFillColor(sf::Color::Green);
 }
 
 
