@@ -35,5 +35,11 @@ private://sadece pipe sınıfına özel değişkenler
 
     sf::RectangleShape alt_engel;
 
+    // boru görsellerini belleğe yüklemek için texture nesneleri
+    sf::Texture pipe_texture;
+
+    // boru görsellerini ekranda gösterecek sprite nesneleri
+    sf::Sprite ust_pipe_sprite;
+    sf::Sprite alt_pipe_sprite;
 
 };

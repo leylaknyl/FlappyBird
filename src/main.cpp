@@ -5,11 +5,9 @@
 
 
 int main() {
-    sf::RenderWindow ana_pencere(sf::VideoMode(600, 400), "flappy bird game");//pencere oluşturduk
+    sf::RenderWindow ana_pencere(sf::VideoMode(600, 400), "flappybird game");//pencere oluşturduk
 
     ana_pencere.setFramerateLimit(60);//saniyede en fazla 60 kez çalıştırır
-
-    sf::CircleShape bird_shape(20.f);//karakter tanımlaması yaptık burda 25 piksel yarıçaplı bir daire
 
     sf::Texture bird_texture; // kuş görselini belleğe yüklemek için texture nesnesi
 
@@ -19,19 +17,15 @@ int main() {
 
     bird_sprite.setTexture(bird_texture); // yüklenen texture sprite'a bağlanır
 
-    bird_sprite.setScale(0.08f, 0.08f); // kuş görselinin boyutu küçültülür
+    bird_sprite.setScale(0.15f, 0.15f); // kuş görselinin boyutu ayarlandı
 
     bird_sprite.setPosition(250,150); // kuşun başlangıç konumu ayarlanır
-
-    bird_shape.setFillColor(sf::Color::Yellow);//kuşun iç rengi 
-
-    bird_shape.setPosition(250, 150);//kuşun başlangıç konumu belirleniyor(x,y)koordinatları
 
     // arka plan görselini belleğe yüklemek için texture nesnesi oluşturuldu
     sf::Texture background_texture;
 
-    // background.png dosyası assets klasöründen yüklenir
-    background_texture.loadFromFile("assets/images/background.png");
+    // background.jpg dosyası assets klasöründen yüklenir
+    background_texture.loadFromFile("assets/images/background.jpg");
 
     // arka plan görselini ekranda gösterecek sprite nesnesi oluşturuldu
     sf::Sprite background_sprite;
@@ -41,12 +35,12 @@ int main() {
 
     //arka plan görseli pencere boyutuna göre ayarlanır
     background_sprite.setScale(
-    600.0f / background_texture.getSize().x,
-    400.0f / background_texture.getSize().y
+    620.0f / background_texture.getSize().x,
+    430.0f / background_texture.getSize().y
 );
 
     //arka plan başlangıç konumu ayarlanır
-    background_sprite.setPosition(0,0);
+    background_sprite.setPosition(0,-13);
 
     float bird_speed=0.0f;// kuşun dikey hızı
 
@@ -194,17 +188,21 @@ int main() {
 
         ana_pencere.draw(background_sprite); // arka plan görseli ekrana çizdirilir
 
-        pipe.draw(ana_pencere); // engellerin ekrana çizilmesi
-       
+
         ana_pencere.draw(bird_sprite); // kuş görseli ekrana çizdirilir
+
+        //oyun başladıysa engeller ve skorlar çizilir
+        if(oyun_basladi){
+        pipe.draw(ana_pencere); // engellerin ekrana çizilmesi
 
         ana_pencere.draw(skor_yazi);//skor yazısı ekrana çizilir
     
         ana_pencere.draw(best_yazi); // en yüksek skor yazısı ekrana çizilir
+        }
 
         //oyun başlamadıysa başlangıç yazısı çizilir.
         if(!oyun_basladi){
-            ana_pencere.draw(baslangic_yazi);
+        ana_pencere.draw(baslangic_yazi);
         }
 
         //oyun bittiyse game over yazısı çizilir.
@@ -215,4 +213,4 @@ int main() {
         ana_pencere.display();//ekrana yansıtma 
     }
     return 0;
-} 
+};
