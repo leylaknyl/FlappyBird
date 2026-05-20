@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "../include/Pipe.h"
 #include <string>//skoru metne çevirmek için
+#include <SFML/Audio.hpp>//SFML ses sistemi kütüphanesi projeye dahil edildi
 
 
 
@@ -99,6 +100,49 @@ int main() {
     gameover_yazi.setPosition(150, 140); // yazının ekrandaki konumu ayarlanır
 
 
+    //flap sesi için buffer nesnesi oluşturuldu
+    sf::SoundBuffer flap_buffer;
+
+    //flap.mp3 dosyası assets klasöründen yüklenir
+    flap_buffer.loadFromFile("assets/sounds/flap.mp3");
+
+    //flap sesini oynatacak sound nesnesi oluşturuldu
+    sf::Sound flap_sound;
+
+    //yüklenen ses buffer nesnesi sound nesnesine bağlanır
+    flap_sound.setBuffer(flap_buffer);
+
+    // skor sesi için buffer nesnesi oluşturuldu
+    sf::SoundBuffer score_buffer;
+
+    // score.mp3 dosyası assets klasöründen yüklenir
+    score_buffer.loadFromFile("assets/sounds/score.mp3");
+
+    // skor sesini oynatacak sound nesnesi oluşturuldu
+    sf::Sound score_sound;
+
+    // yüklenen ses buffer nesnesi sound nesnesine bağlanır
+    score_sound.setBuffer(score_buffer);
+
+    // çarpma sesi için buffer nesnesi oluşturuldu
+    sf::SoundBuffer hit_buffer;
+
+    // hit.mp3 dosyası assets klasöründen yüklenir
+    hit_buffer.loadFromFile("assets/sounds/hit.mp3");
+
+    // çarpma sesini oynatacak sound nesnesi oluşturuldu
+    sf::Sound hit_sound;
+
+    // yüklenen ses buffer nesnesi sound nesnesine bağlanır
+    hit_sound.setBuffer(hit_buffer);
+
+    flap_sound.setVolume(20);  // flap sesi biraz kısılır
+
+    score_sound.setVolume(90); // skor sesi daha belirgin yapılır
+
+    hit_sound.setVolume(90);   // çarpma sesi daha belirgin yapılır
+
+
     while(ana_pencere.isOpen()) {//açık olduğu sürece
         sf::Event etkilesim;//işletim sisteminden gelen etkileşimleri algılar
         while (ana_pencere.pollEvent(etkilesim)) {//sırada bekleyen bir etkilesim var mı
@@ -112,6 +156,8 @@ int main() {
 
                     oyun_basladi=true;//space basılınca oyun başlar
                     bird_speed=-6.0f;//yukarı yönlü bir zıplama için negatif bir hız verilir
+
+                    flap_sound.play(); // kuş zıpladığında flap sesi oynatılır
                 }
 
                 // Oyun bittiyse R tuşuna basıldığında kuş başlangıç durumuna döner
@@ -148,6 +194,7 @@ int main() {
         //engel kuşun arkasında kaldıysa ve bu engelden daha önce puan alınmadıysa skor arttırılır
         if (pipe.get_x() + 70 < bird_sprite.getPosition().x && skor_alindi == false) {
          skor++;
+         score_sound.play(); // skor alındığında ses oynatılır
          skor_alindi = true;
         }
 
@@ -160,6 +207,7 @@ int main() {
         // kuş engellere çarptıysa oyun biter
         if (pipe.check_collision(bird_sprite)) {
             oyun_bitti=true;
+            hit_sound.play(); // kuş engele çarptığında çarpma sesi oynatılır
         }
 
         //kuş ekranın üstüne çıkarsa veya yere düşerse oyun kapansın
@@ -170,6 +218,7 @@ int main() {
         )
         {
            oyun_bitti=true;
+           hit_sound.play(); // kuş zemine çarptığında çarpma sesi oynatılır
         }
     }
 
