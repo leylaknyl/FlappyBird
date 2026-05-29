@@ -30,12 +30,12 @@ private://sadece pipe sınıfına özel değişkenler
 
     float bosluk;//engeller arasındaki geçiş boşluğu
 
-    // üst ve alt engel nesneleri
+    // engellerin  görünmez çarpışma ve boyut alanlarını tutan nesneler
     sf::RectangleShape ust_engel;
 
     sf::RectangleShape alt_engel;
 
-    // boru görsellerini belleğe yüklemek için texture nesneleri
+    // boru görsellerini belleğe yüklemek için texture nesnesi
     sf::Texture pipe_texture;
 
     // boru görsellerini ekranda gösterecek sprite nesneleri

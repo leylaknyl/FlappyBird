@@ -28,11 +28,6 @@ Pipe::Pipe() {// Pipe sınıfının constructor fonksiyonu
    alt_engel.setSize(
     sf::Vector2f(70.0f, 400.0f - ust_yukseklik - bosluk)
 );
-
-    //engellerin rengi ayarlandı
-    ust_engel.setFillColor(sf::Color::Green);
-
-    alt_engel.setFillColor(sf::Color::Green);
 }
 
 
@@ -92,8 +87,8 @@ void Pipe::update() {//engellerin konumu her frame güncellensin
     }
 }
 
-    // engeller pencereye çizdirilir
-    void Pipe::draw(sf::RenderWindow& pencere) {
+// engeller pencereye çizdirilir
+ void Pipe::draw(sf::RenderWindow& pencere) {
 
     pencere.draw(ust_pipe_sprite); // üst engel görseli ekrana çizdirilir
 
@@ -135,4 +130,13 @@ void Pipe::reset(){
     alt_engel.setSize(
         sf::Vector2f(70.0f, 400.0f - ust_yukseklik - bosluk)
     );
+
+// üst engel görseli başlangıç konumuna alınır
+ust_pipe_sprite.setPosition(engel_x, ust_yukseklik);
+
+// alt engel görseli boşluk hesabına göre başlangıç konumuna alınır
+alt_pipe_sprite.setPosition(
+    engel_x,
+    ust_yukseklik + bosluk
+);
 }
