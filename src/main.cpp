@@ -20,7 +20,7 @@ int main() {
 
     bird_sprite.setScale(0.15f, 0.15f); // kuş görselinin boyutu ayarlandı
 
-    bird_sprite.setPosition(250,150); // kuşun başlangıç konumu ayarlanır
+    bird_sprite.setPosition(230,150); // kuşun başlangıç konumu ayarlanır
 
     // arka plan görselini belleğe yüklemek için texture nesnesi oluşturuldu
     sf::Texture background_texture;
@@ -49,6 +49,7 @@ int main() {
  
     int skor=0;//oyuncunun mevcut puanını tutar
     int en_yuksek_skor = 0; // oyun boyunca ulaşılan en yüksek skor tutulur
+
     bool skor_alindi=false;//aynı engelden sadece bir kez puan alınmasını kontrol eder
 
     bool oyun_basladi=false;//oyun başlamadan önce başlangıç ekranını göstermek için
@@ -60,7 +61,7 @@ int main() {
     sf::Font font;//yazı tipi için font nesnesi
 
     //font dosyası assets klasöründen yüklendi.
-    font.loadFromFile("assets/fonts/ARIALI.TTF");
+    font.loadFromFile("assets/fonts/PixelOperator.ttf");
 
     sf::Text skor_yazi;// skorun ekranda gösterileceği yazı nesnesi
     sf::Text best_yazi; // en yüksek skorun gösterileceği yazı nesnesi
@@ -75,30 +76,40 @@ int main() {
 
     best_yazi.setCharacterSize(25); // yazı boyutu ayarlanır
 
-    best_yazi.setFillColor(sf::Color::Black); // yazı rengi beyaz yapılır
+    best_yazi.setFillColor(sf::Color::Black); // yazı rengi siyah yapılır
 
     best_yazi.setPosition(20,60); // yazının ekrandaki konumu ayarlanır
 
     best_yazi.setStyle(sf::Text::Bold);
+
     sf::Text baslangic_yazi; // oyun başlamadan önce ekranda gösterilecek yazı
 
     baslangic_yazi.setFont(font); // yazının kullanacağı font belirlenir
-    baslangic_yazi.setCharacterSize(50); // yazı boyutu ayarlanır
+    baslangic_yazi.setCharacterSize(37); // yazı boyutu ayarlanır
     baslangic_yazi.setStyle(sf::Text::Bold); // yazı kalın yapılır
     baslangic_yazi.setFillColor(sf::Color::White); // yazı rengi beyaz yapılır
     baslangic_yazi.setString("FLAPPY BIRD\nPRESS SPACE"); // başlangıç ekranında yazacak metin
-    baslangic_yazi.setPosition(110, 120); // yazının ekrandaki konumu ayarlanır
+    baslangic_yazi.setPosition(180, 130); // yazının ekrandaki konumu ayarlanır
 
     sf::Text gameover_yazi; // oyun bitince ekranda gösterilecek yazı
 
     gameover_yazi.setFont(font); // game over yazısının fontu ayarlanır
-    gameover_yazi.setCharacterSize(40); // yazı boyutu ayarlanır
+    gameover_yazi.setCharacterSize(27); // yazı boyutu ayarlanır
     gameover_yazi.setStyle(sf::Text::Bold); // yazı kalın yapılır
-    gameover_yazi.setFillColor(sf::Color::White); // yazı rengi beyaz yapılır
-    gameover_yazi.setString("GAME OVER\nPRESS R"); // oyun bitince gösterilecek metin
-    
-    gameover_yazi.setPosition(150, 140); // yazının ekrandaki konumu ayarlanır
+    gameover_yazi.setFillColor(sf::Color::Black); // yazı rengi beyaz yapılır
+    gameover_yazi.setPosition(150,110); // yazının ekrandaki konumu ayarlanır
 
+    sf::RectangleShape gameover_kutu; // game over yazılarının arkasındaki kutu
+
+    gameover_kutu.setSize(sf::Vector2f(360, 190)); // kutunun boyutu
+
+    gameover_kutu.setFillColor(sf::Color(245, 230, 180, 220)); // yarı saydam açık renk
+
+    gameover_kutu.setOutlineThickness(4); // kutu kenarlığı
+
+    gameover_kutu.setOutlineColor(sf::Color(80, 45, 25)); // kenarlık rengi
+
+    gameover_kutu.setPosition(120, 100); // kutunun ekrandaki konumu
 
     //flap sesi için buffer nesnesi oluşturuldu
     sf::SoundBuffer flap_buffer;
@@ -136,7 +147,7 @@ int main() {
     // yüklenen ses buffer nesnesi sound nesnesine bağlanır
     hit_sound.setBuffer(hit_buffer);
 
-    flap_sound.setVolume(20);  // flap sesi biraz kısılır
+    flap_sound.setVolume(10);  // flap sesi biraz kısılır
 
     score_sound.setVolume(90); // skor sesi daha belirgin yapılır
 
@@ -160,10 +171,10 @@ int main() {
                     flap_sound.play(); // kuş zıpladığında flap sesi oynatılır
                 }
 
-                // Oyun bittiyse R tuşuna basıldığında kuş başlangıç durumuna döner
+                // // oyun bittikten sonra R tuşuna basılırsa oyun yeniden başlatılır
                 if(etkilesim.key.code == sf::Keyboard::R && oyun_bitti == true){
 
-                bird_sprite.setPosition(250,150); // kuş başlangıç konumuna alınır
+                bird_sprite.setPosition(230,150); // kuş başlangıç konumuna alınır
 
                 bird_speed = 0.0f; // kuşun dikey hızı sıfırlanır
 
@@ -189,8 +200,6 @@ int main() {
 
             pipe.update();//engeller güncelleniyor,fonksiyonun çağrılması
 
-        
-
         //engel kuşun arkasında kaldıysa ve bu engelden daha önce puan alınmadıysa skor arttırılır
         if (pipe.get_x() + 70 < bird_sprite.getPosition().x && skor_alindi == false) {
          skor++;
@@ -213,7 +222,9 @@ int main() {
         //kuş ekranın üstüne çıkarsa veya yere düşerse oyun kapansın
         if(
             bird_sprite.getPosition().y<0 // kuş ekran üstüne çıkmışsa
-            || bird_sprite.getPosition().y +
+            ||
+            // kuş görselinin yaklaşık yüksekliği kullanılarak alt sınır kontrol edilir
+            bird_sprite.getPosition().y +
             50 >400
         )
         {
@@ -222,44 +233,53 @@ int main() {
         }
     }
 
-        // mevcut skor en yüksek skordan büyükse yeni en yüksek skor kaydedilir
+        // // mevcut skor daha yüksekse en yüksek skor güncellenir
         if (skor > en_yuksek_skor) {
             en_yuksek_skor = skor;
         }   
 
         // Skor değeri ekranda gösterilecek yazıya çevrilir
-        skor_yazi.setString("Skore: " + std::to_string(skor));
+        skor_yazi.setString("Score: " + std::to_string(skor));
 
         // en yüksek skor değeri yazıya çevrilerek ekranda gösterilir
         best_yazi.setString("Best Score: " + std::to_string(en_yuksek_skor));
 
+        //oyun bittiğinde gösterilecek metin
+       gameover_yazi.setString(
+        "GAME OVER\n\n"
+        "Score: " + std::to_string(skor) +
+        "    Best: " + std::to_string(en_yuksek_skor) +
+        "\n\nPRESS R FOR RESTART"
+    );
         ana_pencere.clear();//her karede ekran temizlenir
 
         ana_pencere.draw(background_sprite); // arka plan görseli ekrana çizdirilir
 
+        //oyun başladıysa engeller ve skorlar çizilir
+        if(oyun_basladi && oyun_bitti==false){
+
+        pipe.draw(ana_pencere); // engellerin ekrana çizilmesi
 
         ana_pencere.draw(bird_sprite); // kuş görseli ekrana çizdirilir
-
-        //oyun başladıysa engeller ve skorlar çizilir
-        if(oyun_basladi){
-        pipe.draw(ana_pencere); // engellerin ekrana çizilmesi
 
         ana_pencere.draw(skor_yazi);//skor yazısı ekrana çizilir
     
         ana_pencere.draw(best_yazi); // en yüksek skor yazısı ekrana çizilir
         }
 
-        //oyun başlamadıysa başlangıç yazısı çizilir.
-        if(!oyun_basladi){
-        ana_pencere.draw(baslangic_yazi);
+        // oyun başlamadan önce başlangıç ekranı gösterilir
+        if (oyun_basladi == false && oyun_bitti == false) {
+            ana_pencere.draw(bird_sprite);
+            ana_pencere.draw(baslangic_yazi);
         }
 
-        //oyun bittiyse game over yazısı çizilir.
+        // oyun bittiyse game over ekranı ekrana çizdirilir
         if(oyun_bitti){
-            ana_pencere.draw(gameover_yazi);
-        }
+        ana_pencere.draw(gameover_kutu);
+        ana_pencere.draw(gameover_yazi);
+    }
 
         ana_pencere.display();//ekrana yansıtma 
     }
     return 0;
-};
+}
